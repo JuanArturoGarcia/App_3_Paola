@@ -30,14 +30,12 @@ data = yf.download(ticker, period="5y")
 
 if not data.empty:
 
-    precios = data["Close"]
+    precios = data["Close"].squeeze()
 
-    # Rendimientos históricos
     rendimientos = precios.pct_change().dropna()
 
-    # Convertir a float para evitar errores
-    media = float(rendimientos.mean())
-    volatilidad = float(rendimientos.std())
+    media = np.mean(rendimientos)
+    volatilidad = np.std(rendimientos)
 
     num_simulaciones = 100
     dias = 252 * anios
